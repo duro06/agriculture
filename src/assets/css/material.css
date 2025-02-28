@@ -1,0 +1,118 @@
+:root {
+  --primary: #7b1fa2;
+  --secondary: #7c4dff;
+  --success: #4caf50;
+  --info: #03a9f4;
+  --warning: #ff9800;
+  --danger: #f44336;
+  --sidebar-width: 260px;
+  --navbar-height: 70px;
+  --background: #f8f9fe;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--background);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.wrapper {
+  min-height: 100vh;
+  background: var(--background);
+}
+
+/* Navbar */
+.main-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--sidebar-width);
+  height: var(--navbar-height);
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  transition: all 0.3s;
+}
+
+/* Sidebar */
+.main-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,.05);
+  z-index: 999;
+  transition: all 0.3s;
+}
+
+.brand-logo {
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Content */
+.content-wrapper {
+  margin-left: var(--sidebar-width);
+  padding: calc(var(--navbar-height) + 2rem) 2rem 2rem;
+  min-height: 100vh;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.05);
+  margin-bottom: 1.5rem;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.stats-card {
+  padding: 1.5rem;
+}
+
+.stats-card-icon {
+  padding: 15px;
+  border-radius: 8px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.stats-card-icon i {
+  font-size: 30px;
+  color: #fff;
+}
+
+.stats-card-number {
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.stats-card-label {
+  color: rgba(0,0,0,.6);
+  font-size: 0.875rem;
+}
