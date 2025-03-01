@@ -1,13 +1,16 @@
 :root {
-  --primary: #7b1fa2;
-  --secondary: #7c4dff;
-  --success: #4caf50;
-  --info: #03a9f4;
-  --warning: #ff9800;
-  --danger: #f44336;
-  --sidebar-width: 260px;
+  --primary: #6366f1;
+  --secondary: #8b5cf6;
+  --success: #10b981;
+  --info: #3b82f6;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --sidebar-width: 280px;
   --navbar-height: 70px;
-  --background: #f8f9fe;
+  --background: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
 }
 
 * {
@@ -18,24 +21,26 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: var(--background);
-  color: rgba(0, 0, 0, 0.87);
+  background: linear-gradient(135deg, var(--background), #1e293b);
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
 .wrapper {
   min-height: 100vh;
-  background: var(--background);
 }
 
 /* Navbar */
 .main-header {
   position: fixed;
-  top: 0;
-  right: 0;
-  left: var(--sidebar-width);
+  top: 1rem;
+  right: 1rem;
+  left: calc(var(--sidebar-width) + 1rem);
   height: var(--navbar-height);
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -46,12 +51,14 @@ body {
 /* Sidebar */
 .main-sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 1rem;
+  left: 1rem;
+  bottom: 1rem;
   width: var(--sidebar-width);
-  background: #fff;
-  box-shadow: 0 0 15px rgba(0,0,0,.05);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   z-index: 999;
   transition: all 0.3s;
 }
@@ -61,58 +68,102 @@ body {
   display: flex;
   align-items: center;
   padding: 0 2rem;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 16px 16px 0 0;
   color: #fff;
 }
 
 /* Content */
 .content-wrapper {
-  margin-left: var(--sidebar-width);
-  padding: calc(var(--navbar-height) + 2rem) 2rem 2rem;
+  margin-left: calc(var(--sidebar-width) + 2rem);
+  margin-right: 1rem;
+  padding: calc(var(--navbar-height) + 2rem) 1rem 1rem;
   min-height: 100vh;
 }
 
 /* Cards */
 .card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,.05);
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: 0.5s;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover::before {
+  left: 100%;
 }
 
 .stats-card {
   padding: 1.5rem;
+  position: relative;
 }
 
 .stats-card-icon {
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 12px;
   width: 64px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .stats-card-icon i {
-  font-size: 30px;
+  font-size: 28px;
   color: #fff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .stats-card-number {
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .stats-card-label {
-  color: rgba(0,0,0,.6);
+  color: var(--text-secondary);
   font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
 }
