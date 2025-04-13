@@ -7,31 +7,19 @@
     
     <nav class="sidebar-nav">
       <ul>
-        <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active">
-            <i class="fas fa-chart-scatter"></i>
-            <span>Dashboard</span>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/analytics" class="nav-link" active-class="active">
-            <i class="fas fa-analytics"></i>
-            <span>Analytics</span>
-          </router-link>
-        </li>
-        <li class="nav-header">APPLICATIONS</li>
-        <li class="nav-item">
-          <router-link to="/projects" class="nav-link" active-class="active">
-            <i class="fas fa-project-diagram"></i>
-            <span>Projects</span>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/tasks" class="nav-link" active-class="active">
-            <i class="fas fa-tasks"></i>
-            <span>Tasks</span>
-          </router-link>
-        </li>
+        <template v-for="(section, index) in settings.menus" :key="index">
+          <li v-if="section.header" class="nav-header">{{ section.header }}</li>
+          <li v-for="item in section.items" 
+              :key="item.path" 
+              class="nav-item">
+            <router-link :to="item.path" 
+                        class="nav-link" 
+                        active-class="active">
+              <i :class="item.icon"></i>
+              <span>{{ item.title }}</span>
+            </router-link>
+          </li>
+        </template>
       </ul>
     </nav>
   </aside>
@@ -39,6 +27,9 @@
 
 <script setup>
 import AvatarLogo from '../app/AvatarLogo.vue';
+import { useSettingsStore } from '../../stores/settings';
+
+const settings = useSettingsStore();
 </script>
 
 <style scoped>

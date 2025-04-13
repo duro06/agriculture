@@ -20,6 +20,12 @@
   </nav>
 </template>
 
+<script setup>
+import { useSettingsStore } from '../../stores/settings'
+
+const settings = useSettingsStore()
+</script>
+
 <style scoped>
 .nav-right {
   display: flex;
