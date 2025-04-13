@@ -1,8 +1,8 @@
 <template>
   <aside class="main-sidebar">
     <div class="brand-logo">
-      <i class="fas fa-cube text-2xl mr-3"></i>
-      <span class="brand-text">NOVA</span>
+      <AvatarLogo class="brand-logo-icon" />
+      <span class="brand-text">Udumbara</span>
     </div>
     
     <nav class="sidebar-nav">
@@ -37,10 +37,20 @@
   </aside>
 </template>
 
+<script setup>
+import AvatarLogo from '../app/AvatarLogo.vue';
+</script>
+
 <style scoped>
 .brand-logo {
-  font-size: 1.5rem;
-  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo-icon {
+  width: 32px;
+  height: 32px;
 }
 
 .sidebar-nav {

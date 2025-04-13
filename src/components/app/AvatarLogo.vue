@@ -1,10 +1,10 @@
 <template>
-  <q-avatar :size="size">
-    <img src="~assets/icon.svg">
-  </q-avatar>
+  <img :src="logoUrl" alt="Logo" />
 </template>
 
 <script setup>
+import logoUrl from '../../assets/icon.svg'
+
 defineProps({
   size: {
     type: String,
@@ -12,3 +12,11 @@ defineProps({
   }
 })
 </script>
+
+<style scoped>
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
