@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../layouts/MainLayout.vue'
-import DashboardPage from '../views/DashboardPage.vue'
+import dashboardRoutes from './routes/dashboard'
+import pertanianRoutes from './routes/pertanian'
+import peternakanRoutes from './routes/peternakan'
 
 const routes = [
   {
@@ -9,10 +11,11 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Dashboard',
-        component: DashboardPage
+        redirect: '/dashboard'
       },
-      // Add more routes here
+      dashboardRoutes,
+      pertanianRoutes,
+      peternakanRoutes
     ]
   }
 ]
