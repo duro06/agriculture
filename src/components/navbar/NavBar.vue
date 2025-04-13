@@ -1,5 +1,9 @@
 <template>
   <nav class="main-header">
+    <router-link to="/" class="nav-link nav-icon sso-button" data-tooltip="Switch Apps">
+      <i class="fas fa-th"></i>
+    </router-link>
+
     <div class="flex-grow"></div>
     <div class="nav-right">
       <a href="#" class="nav-link nav-icon">
@@ -117,5 +121,47 @@ const settings = useSettingsStore()
 
 .flex-grow {
   flex: 1;
+}
+
+.sso-button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sso-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* Tooltip */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+[data-tooltip]:hover:before {
+  opacity: 1;
+  visibility: visible;
 }
 </style>

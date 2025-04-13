@@ -21,6 +21,7 @@
           :to="`/${app.id}`"
           class="app-card"
           :style="`animation-delay: ${index * 0.1}s`"
+          @click="selectApp(app.id)"
         >
           <div class="icon-wrapper">
             <i :class="app.icon"></i>
@@ -36,14 +37,20 @@
 <script setup>
 import AvatarLogo from '../components/app/AvatarLogo.vue'
 import { useSettingsStore } from '../stores/settings'
+import { useRouter } from 'vue-router'
 
 const settings = useSettingsStore()
+const router = useRouter()
+
+const selectApp = (appId) => {
+  settings.setCurrentApp(appId)
+}
 </script>
 
 <style scoped>
 .sso-wrapper {
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh; /* Kembalikan ke min-height */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -92,13 +99,11 @@ const settings = useSettingsStore()
   left: -50%;
   right: -50%;
   bottom: -50%;
-  background-image: 
-    radial-gradient(var(--text-primary) 1px, transparent 1px),
-    radial-gradient(var(--text-primary) 1px, transparent 1px);
+  background-image: radial-gradient(var(--text-primary) 1px, transparent 1px);
   background-size: 30px 30px;
-  background-position: 0 0, 15px 15px;
   opacity: 0.05;
-  animation: dotMove 20s linear infinite;
+  animation: dotMove 5s linear infinite; /* Percepat animasi */
+  overflow: hidden; /* Tambah overflow hidden */
 }
 
 @keyframes floatSphere {
@@ -118,19 +123,10 @@ const settings = useSettingsStore()
 
 @keyframes dotMove {
   0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(15px, 0) rotate(0.5deg);
-  }
-  50% {
-    transform: translate(15px, 15px) rotate(0deg);
-  }
-  75% {
-    transform: translate(0, 15px) rotate(-0.5deg);
+    transform: translate(0, 0);
   }
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(-30px, -30px); /* Sesuaikan dengan background-size */
   }
 }
 
@@ -179,9 +175,10 @@ const settings = useSettingsStore()
 
 .apps-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Changed from auto-fill to fixed 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   width: 100%;
+  margin: 0; /* Tambahkan margin 0 */
 }
 
 @media (max-width: 768px) {

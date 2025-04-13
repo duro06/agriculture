@@ -22,7 +22,7 @@ export const useSettingsStore = defineStore('settings', {
       { 
         id: 'peternakan', 
         name: 'Peternakan', 
-        icon: 'fas fa-fish',
+        icon: 'fas fa-horse',
         menus: peternakanMenus
       }
     ],
@@ -31,11 +31,14 @@ export const useSettingsStore = defineStore('settings', {
 
   actions: {
     setCurrentApp(appId) {
+      if (appId === this.currentApp) return
+      
       this.currentApp = appId
       const app = this.apps.find(a => a.id === appId)
       if (app) {
         this.menus = app.menus
       }
+      console.log('Current menus:', this.menus) // For debugging
     }
   }
 })
