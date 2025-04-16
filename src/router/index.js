@@ -8,8 +8,14 @@ import peternakanRoutes from './routes/peternakan'
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/LoginPage.vue')
+  },
+  {
     path: '/',
     component: SSOLayout,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -21,6 +27,7 @@ const routes = [
   {
     path: '/:appId',
     component: MainLayout,
+    meta: { requiresAuth: true },
     children: [
       dashboardRoutes,
       pertanianRoutes,
@@ -34,9 +41,18 @@ const router = createRouter({
   routes
 })
 
-// Add navigation guard to set current app and menus
+// Add navigation guard to check authentication and set current app
 router.beforeEach((to, from, next) => {
   const settings = useSettingsStore()
+  const isAuthenticated = settings.isAuthenticated // You'll need to add this to your settings store
+  
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next('/login')
+      return
+    }
+  }
+
   const appId = to.params.appId
   if (appId) {
     settings.setCurrentApp(appId)

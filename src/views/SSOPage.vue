@@ -292,6 +292,7 @@ const selectApp = (appId) => {
   z-index: 1;
   background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
