@@ -71,11 +71,7 @@ const validateEmail = () => {
 }
 
 const handleLogin = async () => {
-  // console.log('Button clicked!')
-  // console.log('Email:', email.value)
-  // console.log('Password:', password.value)
-  // console.log('Toast ref:', toast.value)
-  toast.value?.show('Nyoba', 'error')
+  
 
   if (!!emailError.value) {
     toast.value?.show(emailError.value, 'error')

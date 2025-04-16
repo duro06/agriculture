@@ -44,7 +44,8 @@ const router = createRouter({
 // Add navigation guard to check authentication and set current app
 router.beforeEach((to, from, next) => {
   const settings = useSettingsStore()
-  const isAuthenticated = settings.isAuthenticated // You'll need to add this to your settings store
+  const isAuthenticated = !!localStorage.getItem('token') // You'll need to add this to your settings store
+  console.log('isAuthenticated', isAuthenticated);
   
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
