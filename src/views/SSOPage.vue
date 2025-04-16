@@ -4,6 +4,15 @@
       <div class="gradient-sphere"></div>
       <div class="gradient-sphere second"></div>
       <div class="grid-overlay"></div>
+      <div class="stars">
+        <div class="star" v-for="n in 20" :key="n" 
+          :style="`
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation-delay: ${Math.random() * 3}s
+          `"
+        ></div>
+      </div>
     </div>
     <div class="sso-container">
       <div class="logo-section">
@@ -71,26 +80,28 @@ const selectApp = (appId) => {
 
 .gradient-sphere {
   position: absolute;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  width: 70vw;  /* Increase size */
+  height: 70vw;
+  background: radial-gradient(circle, var(--primary) 20%, transparent 70%);  /* Increase color coverage */
   border-radius: 50%;
-  top: -25vw;
-  left: -25vw;
-  opacity: 0.15;
+  top: -35vw;
+  left: -35vw;
+  opacity: 0.25;  /* Increase opacity */
   animation: floatSphere 20s ease-in-out infinite;
-  filter: blur(60px);
+  filter: blur(80px);  /* Increase blur for softer edges */
 }
 
 .gradient-sphere.second {
-  width: 40vw;
-  height: 40vw;
-  background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, var(--secondary) 20%, transparent 70%);
   top: auto;
   left: auto;
-  bottom: -20vw;
-  right: -20vw;
+  bottom: -30vw;
+  right: -30vw;
+  opacity: 0.25;
   animation: floatSphere 25s ease-in-out infinite reverse;
+  filter: blur(80px);
 }
 
 .grid-overlay {
@@ -106,18 +117,50 @@ const selectApp = (appId) => {
   overflow: hidden; /* Tambah overflow hidden */
 }
 
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 4s infinite;
+}
+
+@keyframes twinkle {
+  0% { 
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
 @keyframes floatSphere {
   0%, 100% {
-    transform: translate(0, 0);
+    transform: translate(0, 0) scale(1);
   }
   25% {
-    transform: translate(5%, 5%) rotate(5deg);
+    transform: translate(8%, 8%) scale(1.05) rotate(5deg);
   }
   50% {
-    transform: translate(0, 10%) rotate(0deg);
+    transform: translate(0, 15%) scale(1) rotate(0deg);
   }
   75% {
-    transform: translate(-5%, 5%) rotate(-5deg);
+    transform: translate(-8%, 8%) scale(0.95) rotate(-5deg);
   }
 }
 
