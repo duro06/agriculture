@@ -40,6 +40,9 @@
         </router-link>
       </div>
     </div>
+    <div class="logout-icon-wrapper" @click="logout" title="Logout">
+      <i class="fas fa-sign-out-alt logout-icon"></i>
+    </div>
   </div>
 </template>
 
@@ -53,6 +56,12 @@ const router = useRouter()
 
 const selectApp = (appId) => {
   settings.setCurrentApp(appId)
+}
+
+const logout = () => {
+  localStorage.removeItem('token') // Clear the token
+  settings.clearSettings() // Call the store's clearSettings method
+  router.push('/login') // Redirect to the login page
 }
 </script>
 
@@ -318,6 +327,59 @@ const selectApp = (appId) => {
   font-size: 1.1rem;
   font-weight: 500;
   margin-top: 0.5rem;
+}
+
+.logout-icon-wrapper {
+  position: fixed; /* Fix it to the screen */
+  bottom: 20px; /* Place it at the bottom of the screen */
+  right: 20px; /* Place it at the right of the screen */
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0066cc, #003399);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000; /* Ensure it appears above all other elements */
+}
+
+.logout-icon-wrapper:hover {
+  background: linear-gradient(135deg, #0052a3, #002266);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.logout-icon {
+  font-size: 24px;
+  color: white;
+}
+
+.logout-icon-wrapper[title] {
+  position: fixed;
+}
+
+.logout-icon-wrapper[title]::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 60px; /* Adjust tooltip position */
+  right: 50%;
+  transform: translateX(50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.logout-icon-wrapper:hover::after {
+  opacity: 1;
 }
 
 @keyframes slideUp {

@@ -39,6 +39,10 @@ export const useSettingsStore = defineStore('settings', {
         this.menus = app.menus
       }
       console.log('Current menus:', this.menus) // For debugging
+    },
+    clearSettings() {
+      this.currentApp = null
+      this.menus = []
     }
   }
 })
