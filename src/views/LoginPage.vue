@@ -58,18 +58,22 @@ const email = ref('')
 const password = ref('')
 const emailError = ref('')
 const isLoading = ref(false)
+let debounceTimer = null // Timer for debouncing
 
 const validateEmail = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!email.value) {
-    emailError.value = 'Email is required'
-    toast.value?.show('Email is required', 'warning')
-  } else if (!emailRegex.test(email.value)) {
-    emailError.value = 'Please enter a valid email address'
-    toast.value?.show('Please enter a valid email address', 'error')
-  } else {
-    emailError.value = ''
-  }
+  clearTimeout(debounceTimer) // Clear the previous timer
+  debounceTimer = setTimeout(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email.value) {
+      emailError.value = 'Email is required'
+      toast.value?.show('Email is required', 'warning')
+    } else if (!emailRegex.test(email.value)) {
+      emailError.value = 'Please enter a valid email address'
+      toast.value?.show('Please enter a valid email address', 'error')
+    } else {
+      emailError.value = ''
+    }
+  }, 800) // Debounce delay of 800ms
 }
 
 const handleLogin = async () => {
