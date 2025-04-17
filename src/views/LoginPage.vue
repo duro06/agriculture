@@ -6,7 +6,7 @@
           <h1>Agricultre App</h1>
           <p>Welcome back! Please login to continue.</p>
         </div>
-        <div class="form-container">
+        <form @submit.prevent="handleLogin">
           <div class="form-group">
             <label for="email">Email</label>
             <input 
@@ -31,13 +31,14 @@
             />
           </div>
           <button 
+            type="submit" 
             class="btn-primary" 
-            :disabled="!!emailError"
-            @click="handleLogin"
+            :disabled="isLoading || !!emailError"
           >
-            Sign In
+            <i v-if="isLoading" class="fas fa-spinner spinner"></i>
+            <span v-else>Sign In</span>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -56,6 +57,7 @@ const toast = ref(null)
 const email = ref('')
 const password = ref('')
 const emailError = ref('')
+const isLoading = ref(false)
 
 const validateEmail = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -71,13 +73,12 @@ const validateEmail = () => {
 }
 
 const handleLogin = async () => {
-  
-
   if (!!emailError.value) {
     toast.value?.show(emailError.value, 'error')
     return
   }
 
+  isLoading.value = true
   try {
     const response = await api.post('v1/auth/login', {
       email: email.value,
@@ -85,10 +86,11 @@ const handleLogin = async () => {
     })
     
     localStorage.setItem('token', response.data.token)
-    // toast.value?.show('Login successful! Redirecting...', 'success')
-    setTimeout(() => router.push('/'), 200)
+    setTimeout(() => router.push('/'), 50)
   } catch (err) {
-    // toast.value?.show('Login failed. Please check your credentials.', 'error')
+    console.error('Login failed:', err)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -230,6 +232,11 @@ onMounted(() => {
   display: block;
 }
 
+.spinner {
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
 @keyframes boxAppear {
   from {
     opacity: 0;
@@ -256,6 +263,15 @@ onMounted(() => {
   }
   50% {
     transform: translate(-5%, 5%);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

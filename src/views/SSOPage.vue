@@ -40,8 +40,14 @@
         </router-link>
       </div>
     </div>
-    <div class="logout-icon-wrapper" @click="logout" title="Logout">
-      <i class="fas fa-sign-out-alt logout-icon"></i>
+    <div 
+      class="logout-icon-wrapper" 
+      :class="{ disabled: settings.isLoading }" 
+      @click="!settings.isLoading && settings.logout(router)" 
+      title="Logout"
+    >
+      <i v-if="!settings.isLoading" class="fas fa-sign-out-alt logout-icon"></i>
+      <i v-else class="fas fa-spinner logout-icon spinner"></i>
     </div>
   </div>
 </template>
@@ -56,12 +62,6 @@ const router = useRouter()
 
 const selectApp = (appId) => {
   settings.setCurrentApp(appId)
-}
-
-const logout = () => {
-  localStorage.removeItem('token') // Clear the token
-  settings.clearSettings() // Call the store's clearSettings method
-  router.push('/login') // Redirect to the login page
 }
 </script>
 
@@ -352,9 +352,28 @@ const logout = () => {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
+.logout-icon-wrapper.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 .logout-icon {
   font-size: 24px;
   color: white;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .logout-icon-wrapper[title] {
